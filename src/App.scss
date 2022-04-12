@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+.wrapper{
+    width: 100%;
+    background-image: url('./images/img-2.jpeg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -10;
+    height: 80vh;
+}
+@media screen and (max-width: 960px) {
+    .wrapper {
+        height: 90vh;
+    }
+}
