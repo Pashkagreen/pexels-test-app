@@ -1,0 +1,36 @@
+.categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  li {
+    list-style: none;
+
+    a {
+      display: flex;
+      color: #5e5e5e;
+      text-decoration: none;
+      font-size: 17px;
+      line-height: 26px;
+      font-weight: 600;
+      letter-spacing: .4px;
+      align-items: center;
+      padding: 1.25rem;
+      border-bottom: 4px solid transparent;
+      transition: 0.3s;
+      &:hover {
+        color: #0064f9;
+        border-bottom: 4px solid #0064f9;
+      }
+    }
+  }
+}
+.underline {
+  width: 100%;
+  height: 1px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%);
+}
