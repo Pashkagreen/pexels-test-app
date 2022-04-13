@@ -1,8 +1,10 @@
 import {combineReducers} from "redux";
-import {photosReducer} from "./photosReducer";
+import photosReducer from "./photosReducer";
 
 export const rootReducer = combineReducers({
     photos: photosReducer
 })
 
-export type RootState = ReturnType<typeof rootReducer>
+type RootState = ReturnType<typeof rootReducer>
+
+export default RootState
