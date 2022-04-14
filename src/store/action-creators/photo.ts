@@ -22,7 +22,7 @@ export const fetchPhotos = (page: number): ThunkAction<void, RootState, null, Ph
             dispatch({
                     type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS,
                     payload: {
-                        photos: response.photos,
+                        photos: [...response.photos],
                         page: page,
                     }
                 })

@@ -16,6 +16,7 @@
   cursor: pointer;
   text-decoration: none;
   font-size: 2rem;
+  margin-right: 1rem;
 }
 
 
@@ -25,9 +26,12 @@
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 70vw;
+  width: max-content;
   justify-content: end;
   margin-right: 2rem;
+  margin-left: 1rem;
+  margin-left: auto;
+
 }
 
 .nav-item {
@@ -58,10 +62,22 @@
 .menu-icon {
   display: none;
 }
+.place-for-search {
+  width: 30%;
+  margin-right: 20px;
+}
 
 @media screen and (max-width: 960px) {
   .NavbarItems {
     position: relative;
+  }
+  .navbar span {
+    display: none;
+  }
+  .place-for-search {
+    width: 55%;
+    max-width: 60%;
+    margin-left: 20px;
   }
 
   .nav-menu {

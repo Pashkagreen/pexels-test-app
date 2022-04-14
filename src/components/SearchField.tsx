@@ -10,7 +10,7 @@ const SearchField:React.FC = (props) => {
     }
     let arrTips: any[] = Array.from(setTips)
     return (
-        <div className='search-field'>
+        <div className='search-field' >
             <h1 className='search-title'>Лучшие бесплатные стоковые фото, изображения без роялти и видео от талантливых авторов.</h1>
             <SearchForm/>
             <div className='search-tips'>
