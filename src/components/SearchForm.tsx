@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {InputHTMLAttributes} from 'react';
 import './SearchForm.scss'
 
-const SearchForm: React.FC = () => {
+const SearchForm: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({type ='text', value, name, onChange}) => {
     return (
         <div className='search-form'>
-            <input className='search-input' type="text" value='' name='' placeholder='Ищите бесплатные фото и видео'/>
-            <button className='search-button'>
-                <i className="fas fa-search"></i>
-            </button>
+            <input
+                className='search-input'
+                type={type}
+                value={value}
+                name={name}
+                id={name}
+                onChange={onChange}
+                required
+                autoComplete='off'
+                placeholder='Ищите бесплатные фото и видео'/>
         </div>
     );
 };

@@ -34,6 +34,40 @@ export const fetchPhotos = (page: number): ThunkAction<void, RootState, null, Ph
     }
 }
 
+export const searchPhotos = (page: number, searchQuery: string): ThunkAction<void, RootState, null, PhotoAction> => {
+    // const client = createClient(process.env.REACT_APP_API_KEY || '');
+    return async dispatch => {
+        try {
+            dispatch({type: PhotoActionTypes.FETCH_PHOTOS, })
+            const photos = await fetch( `https://api.pexels.com/v1/search?query=${searchQuery}&per_page=15&page=${page}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: API_KEY,
+                    },
+                })
+            const response = await photos.json()
+            console.log(response)
+            dispatch({
+                type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS,
+                payload: {
+                    photos: [...response.photos],
+                    page: page,
+                }
+            })
+            // }
+        } catch (e) {
+            console.log(e)
+            dispatch({type: PhotoActionTypes.FETCH_PHOTOS_ERROR, payload: 'Error sorry bro'})
+        }
+    }
+}
+
+
+
+
+
 export const fetchPhoto = (id: number): ThunkAction<void, RootState, null, PhotoAction> => {
     return async dispatch => {
         try {
@@ -50,9 +84,7 @@ export const fetchPhoto = (id: number): ThunkAction<void, RootState, null, Photo
 
             dispatch({
                 type: PhotoActionTypes.FETCH_PHOTO_FOR_BACKGROUND,
-                payload: {
-                    backgroundImage
-                }
+                payload: [...backgroundImage]
             })
             // }
         } catch (e) {
@@ -61,3 +93,4 @@ export const fetchPhoto = (id: number): ThunkAction<void, RootState, null, Photo
         }
     }
 }
+

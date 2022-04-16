@@ -4,7 +4,7 @@ export interface PhotoState {
     photos: Photo[],
     loading: boolean,
     error: null | string,
-    background: object,
+    background: Photo[],
 }
 
 export enum PhotoActionTypes {
@@ -31,6 +31,6 @@ interface FetchPhotosErrorAction {
 
 interface FetchPhotoForBackground {
     type: PhotoActionTypes.FETCH_PHOTO_FOR_BACKGROUND,
-    payload: object
+    payload: Photo []
 }
 export type PhotoAction = FetchPhotosAction | FetchPhotosSuccessAction | FetchPhotosErrorAction | FetchPhotoForBackground

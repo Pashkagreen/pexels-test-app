@@ -21,6 +21,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "src/components/images/svg",
+    "custom.d.ts"
+  ],
 }

@@ -1,16 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import Dropdown from './Dropdown'
 import './Dropdown.scss'
 import './Navbar.scss'
 import Button from "./Button";
 import SearchForm from "./SearchForm";
-import {log} from "util";
+import IntroProps from "../types/inputProps";
 const Logo = require( '../images/logo192.png')
 
-
-
-const Navbar: React.FC = (props) => {
+const Navbar: React.FC<IntroProps> = ({ onSearch }) => {
     const [click, setClick] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [should, setShould] = useState(false)
@@ -33,7 +31,7 @@ const Navbar: React.FC = (props) => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [handleScroll]);
 
     const onMouseEnter = () => {
         if(window.innerWidth < 960) {
@@ -51,6 +49,14 @@ const Navbar: React.FC = (props) => {
         }
     }
 
+    const [search, setSearch] = useState('');
+
+    const submitHandler = (e: FormEvent) => {
+        e.preventDefault();
+        onSearch(search);
+        setSearch('');
+    }
+
 
     return (
         <>
@@ -63,7 +69,12 @@ const Navbar: React.FC = (props) => {
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>
                 <div className="place-for-search">
-                    { should ? <SearchForm/> : null}
+                    { should ? <form className='search-block' onSubmit={submitHandler}>
+                        <SearchForm value={search} onChange={(e) => setSearch(e.currentTarget.value)}/>
+                        <button className='search-button'>
+                            <i className='fa fa-search'></i>
+                        </button>
+                    </form> : null}
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                     <li className='nav-item'><Link to='/search-results' className='nav-links' onClick={closeMobileMenu}>
