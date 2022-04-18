@@ -1,14 +1,15 @@
 import React from 'react';
 import './Categories.scss'
+import {Link} from 'react-router-dom'
 
 const Categories: React.FC = () => {
     return (
         <>
         <ul className='categories'>
-            <li><a href="#">Главная</a></li>
-            <li><a href="#">Найти</a></li>
-            <li><a href="#">Лучшие челленджи</a></li>
-            <li><a href="#">Авторы</a></li>
+            <li><Link to='/'>Главная</Link></li>
+            <li><Link to='/search'>Найти</Link></li>
+            <li><Link to='/'>Лучшие челленджи</Link></li>
+            <li><Link to='/'>Авторы</Link></li>
         </ul>
             <div className="underline"></div>
         </>

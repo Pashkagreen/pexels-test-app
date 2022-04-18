@@ -1,42 +1,66 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.scss';
-import Navbar from "./components/Navbar";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import SearchField from "./components/SearchField";
-import Categories from "./components/Categories";
-import Gallery from "./components/photos/Gallery";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "./hooks/useTypedSelector";
-import {fetchPhoto, searchPhotos} from "./store/action-creators/photo";
+import {fetchPhoto, fetchPhotos, searchPhotos} from "./store/action-creators/photo";
+import MainPage from "./components/pages/MainPage";
+import SearchPage from "./components/pages/SearchPage";
 
 
 
 const App = () => {
     const dispatch = useDispatch()
-    const [loading, setLoading] = useState(true);
-    const [searchFor, setSearchFor] = useState('');
-    const [page, setPage] = useState(1);
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [fetching, setFetching] = useState(true)
+
     const state = useTypedSelector(state => state.photos)
+    const searchState = useTypedSelector(state => state.word)
+
+    // For main page background
+    // useEffect(() => {
+    //     dispatch(fetchPhoto(2014422))
+    // },[])
 
     useEffect(() => {
-        dispatch(fetchPhoto(2014422))
+            if (fetching) {
+                if (searchState?.searchWord === '') {
+                    dispatch(fetchPhotos(currentPage))
+                    setCurrentPage(prevState => prevState + 1)
+                    setFetching(false)
+                } else {
+                    console.log(searchState?.searchWord)
+                    dispatch(searchPhotos(currentPage, searchState?.searchWord))
+                    setCurrentPage(prevState => prevState + 1)
+                    setFetching(false)
+                }
+            }}
+        ,[dispatch, fetching])
+
+
+    const scrollHandler = (e: any) => {
+        if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+            setFetching(true)
+        }
+    }
+
+    useCallback(() => {
+        document.addEventListener('scroll', scrollHandler)
+
+        return function () {
+            document.removeEventListener('scroll', scrollHandler)
+        }
     },[])
 
 
-    const searchPhotosHandler = (query: string) => {
-        setSearchFor(query);
-        dispatch(searchPhotos(page, query))
-        console.log(searchFor)
-    }
-
   return (
     <Router>
-        <div className='wrapper'>
-            <Navbar onSearch={searchPhotosHandler}/>
-            <SearchField onSearch={searchPhotosHandler}/>
-        </div>
-        <Categories/>
-        <Gallery setSearch={searchFor}/>
+       <Routes>
+           <Route path='/' element={<MainPage/>}/>
+           <Route path='/search' element={<SearchPage/>}/>
+           <Route path='*' element={<MainPage/>}/>
+       </Routes>
     </Router>
   );
 }

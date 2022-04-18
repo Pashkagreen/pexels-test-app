@@ -34,7 +34,7 @@ export const fetchPhotos = (page: number): ThunkAction<void, RootState, null, Ph
     }
 }
 
-export const searchPhotos = (page: number, searchQuery: string): ThunkAction<void, RootState, null, PhotoAction> => {
+export const searchPhotos = (page: number, searchQuery: string | undefined | null): ThunkAction<void, RootState, null, PhotoAction> => {
     // const client = createClient(process.env.REACT_APP_API_KEY || '');
     return async dispatch => {
         try {
