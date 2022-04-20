@@ -1,15 +1,21 @@
-import SearchState, {SearchAction, SearchWordTypes} from "../../types/searchWord";
+import SearchState, {
+  SearchAction,
+  SearchWordTypes,
+} from "../../types/searchWord";
 
 const initialState: SearchState = {
-    searchWord: '',
-}
+  searchWord: "",
+};
 
-const wordReducer = (state = initialState, action: SearchAction): SearchState | undefined => {
-    if (action.type === SearchWordTypes.SET_SEARCH_WORD) {
-        return {
-            searchWord: action.payload
-        }
-    } else return state
-}
+const wordReducer = (
+  state = initialState,
+  action: SearchAction
+): SearchState | undefined => {
+  if (action.type === SearchWordTypes.SET_SEARCH_WORD) {
+    return {
+      searchWord: action.payload,
+    };
+  } else return state;
+};
 
-export default wordReducer
+export default wordReducer;

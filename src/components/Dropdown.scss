@@ -5,17 +5,19 @@
   list-style: none;
   text-align: start;
   border-radius: 4px;
-  li {
+  li a{
     text-decoration: none;
     background: #232A34;
     cursor: pointer;
     color: white;
     &:hover {
+      color: white;
       background: #05a081;
     }
   }
   .clicked {
     display: none;
+    color:white;
   }
 }
 .dropdown-link {
