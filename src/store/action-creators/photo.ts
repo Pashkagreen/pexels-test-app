@@ -22,6 +22,7 @@ export const fetchPhotos = (
         }
       );
       const response = await photos.json();
+      console.log(response);
       dispatch({
         type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS,
         payload: {

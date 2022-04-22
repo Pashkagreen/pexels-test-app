@@ -1,15 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ModifiedNavbar from "../ModifiedNavbar";
-import Gallery from "../photos/Gallery";
+import Gallery from "../gallery/Gallery";
 import "./SearchPage.scss";
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import Spinner from "../Spinner";
+import { EMPTY_SEARCH, RESULT } from "../../constants/searchConstants";
+import { searchPhotos } from "../../store/action-creators/photo";
+import { useDispatch } from "react-redux";
 
 const SearchPage: React.FC = () => {
-  const state = useTypedSelector((state) => state.photos);
-  const searchState = useTypedSelector((state) => state.word);
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [fetching, setFetching] = useState(true);
+  const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
+  const searchWordState = useTypedSelector((state) => state.word);
   const loadingState = useTypedSelector((state) => state.photos?.loading);
+
+  useEffect(() => {
+    if (fetching) {
+      dispatch(searchPhotos(currentPage, searchWordState?.searchWord));
+      console.log(searchState);
+      setCurrentPage((prevState) => prevState + 1);
+      setFetching(false);
+    }
+  }, [fetching]);
+
+  const scrollHandler = (e: any) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetching(true);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, [scrollHandler]);
 
   return (
     <div>
@@ -23,17 +55,17 @@ const SearchPage: React.FC = () => {
         </div>
       ) : (
         <div className="search-container">
-          {state?.searchPhotos.length === 0 ? (
-            <h1>По вашему запросу ничего не найдено</h1>
-          ) : (
-            <h1>Результаты поиска по запросу "{searchState?.searchWord}":</h1>
-          )}
+          <h1>
+            {searchState?.length === 0
+              ? EMPTY_SEARCH
+              : `${RESULT} ${searchWordState?.searchWord}`}
+          </h1>
           <Link to="/" className="return-button">
             Вернуться на главную
           </Link>
         </div>
       )}
-      <Gallery />
+      <Gallery photo={searchState} />
     </div>
   );
 };

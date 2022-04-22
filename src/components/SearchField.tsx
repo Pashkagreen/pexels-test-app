@@ -1,4 +1,10 @@
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import "./SearchField.scss";
 import SearchForm from "./SearchForm";
 import tips from "./tips";
@@ -26,7 +32,7 @@ const SearchField: React.FC = () => {
     navigate(`/search/${search}`);
   };
 
-  const arrTipsFunc = useCallback(() => {
+  const arrTipsFunc = useMemo(() => {
     let setTips = new Set();
     while (setTips.size !== 7) {
       let arr = tips[Math.floor(Math.random() * 40)];
@@ -37,11 +43,16 @@ const SearchField: React.FC = () => {
   }, []);
 
   const tipsSearch = (e: any) => {
+    e.preventDefault();
     const tip = e.target.innerHTML.substr(0, e.target.innerHTML.length - 1);
-    dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: tip });
-    dispatch(searchPhotos(1, tip));
+    console.log(tip);
+    dispatch({
+      type: SearchWordTypes.SET_SEARCH_WORD,
+      payload: tip.toString(),
+    });
+    dispatch(searchPhotos(1, tip.toString()));
     console.log(searchState);
-    navigate(`/search/${encodeURI(tip)}`);
+    navigate(`/search/${tip}`);
   };
 
   return (
@@ -65,9 +76,9 @@ const SearchField: React.FC = () => {
       <div className="search-tips">
         <span>Идеи для поиска:</span>
         <ul className="search-keywords" onClick={tipsSearch}>
-          {arrTipsFunc().map((item) => (
+          {arrTipsFunc.map((item) => (
             <li key={item.id}>
-              <a href="#">{item.tip},</a>
+              <a href="">{item.tip},</a>
             </li>
           ))}
         </ul>
