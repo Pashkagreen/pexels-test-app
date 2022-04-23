@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../Navbars/Navbar";
 import ModifiedNavbar from "../Navbars/ModifiedNavbar";
 import SearchField from "../SearchField/SearchField";
@@ -24,6 +24,7 @@ const MainPage: React.FC = () => {
     }
   }, [dispatch, fetching]);
 
+  //For infinite scroll
   const scrollHandler = useCallback(
     (e: any) => {
       if (
@@ -42,8 +43,9 @@ const MainPage: React.FC = () => {
     return function () {
       document.removeEventListener("scroll", scrollHandler);
     };
-  }, []);
+  }, [scrollHandler]);
 
+  //For navbar
   const handleScroll = () => {
     const position = window.scrollY;
     if (position > 100) {

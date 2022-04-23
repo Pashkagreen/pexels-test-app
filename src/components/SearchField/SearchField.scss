@@ -35,7 +35,8 @@
     gap: 10px;
     li {
       list-style: none;
-      a {
+      span {
+        cursor: pointer;
         text-decoration: none;
         color: #DBDBDB;
         font-weight: normal;

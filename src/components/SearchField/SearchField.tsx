@@ -3,7 +3,6 @@ import "./SearchField.scss";
 import SearchForm from "../SearchForm/SearchForm";
 import tips from "./tips";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
 import { searchPhotos } from "../../store/action-creators/photo";
@@ -12,10 +11,6 @@ const SearchField: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const searchState = useTypedSelector((state) => state.word);
-  const searchListState = useTypedSelector(
-    (state) => state.photos?.searchPhotos
-  );
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -36,7 +31,7 @@ const SearchField: React.FC = () => {
 
   const tipsSearch = (e: any) => {
     e.preventDefault();
-    const tip = e.target.innerHTML.substr(0, e.target.innerHTML.length - 1);
+    const tip = e.target.innerHTML.substring(0, e.target.innerHTML.length - 1);
     dispatch({
       type: SearchWordTypes.SET_SEARCH_WORD,
       payload: tip.toString(),
@@ -68,7 +63,7 @@ const SearchField: React.FC = () => {
         <ul className="search-keywords" onClick={tipsSearch}>
           {arrTipsFunc.map((item) => (
             <li key={item.id}>
-              <a href="">{item.tip},</a>
+              <span>{item.tip},</span>
             </li>
           ))}
         </ul>

@@ -24,7 +24,7 @@ const SearchPage: React.FC = () => {
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [dispatch, fetching]);
+  }, [fetching]);
 
   const scrollHandler = useCallback(
     (e: any) => {
@@ -44,7 +44,7 @@ const SearchPage: React.FC = () => {
     return function () {
       document.removeEventListener("scroll", scrollHandler);
     };
-  }, [scrollHandler]);
+  }, []);
 
   return (
     <div>
