@@ -27,7 +27,6 @@ const photosReducer = (
       let photosArr: Photo[] = [];
       photosArr = [...state.photos, ...photos];
       return {
-        ...state,
         loading: false,
         error: null,
         photos: photosArr,
@@ -39,7 +38,7 @@ const photosReducer = (
       let searchPhotosArr: Photo[] = [];
       searchPhotosArr = [...state.searchPhotos, ...searchPhotos];
       return {
-        ...state,
+        photos: [...state.photos],
         loading: false,
         error: null,
         searchPhotos: searchPhotosArr,

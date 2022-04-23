@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Navbar from "../Navbars/Navbar";
 import ModifiedNavbar from "../Navbars/ModifiedNavbar";
 import SearchField from "../SearchField/SearchField";
@@ -24,15 +24,18 @@ const MainPage: React.FC = () => {
     }
   }, [dispatch, fetching]);
 
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
-    ) {
-      setFetching(true);
-    }
-  };
+  const scrollHandler = useCallback(
+    (e: any) => {
+      if (
+        e.target.documentElement.scrollHeight -
+          (e.target.documentElement.scrollTop + window.innerHeight) <
+        100
+      ) {
+        setFetching(true);
+      }
+    },
+    [setFetching]
+  );
 
   useEffect(() => {
     document.addEventListener("scroll", scrollHandler);

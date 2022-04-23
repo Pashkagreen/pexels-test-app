@@ -10,7 +10,6 @@ export const fetchPhotos = (
   // const client = createClient(process.env.REACT_APP_API_KEY || '');
   return async (dispatch) => {
     try {
-      dispatch({ type: PhotoActionTypes.FETCH_PHOTOS });
       const photos = await fetch(
         `https://api.pexels.com/v1/curated?page=${page}`,
         {
@@ -48,7 +47,6 @@ export const searchPhotos = (
   // const client = createClient(process.env.REACT_APP_API_KEY || '');
   return async (dispatch) => {
     try {
-      dispatch({ type: PhotoActionTypes.FETCH_PHOTOS });
       const photos = await fetch(
         `https://api.pexels.com/v1/search?query=${searchQuery}&per_page=15&page=${page}`,
         {
@@ -84,7 +82,6 @@ export const fetchPhoto = (
 ): ThunkAction<void, RootState, null, PhotoAction> => {
   return async (dispatch) => {
     try {
-      dispatch({ type: PhotoActionTypes.FETCH_PHOTOS });
       const background = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
         method: "GET",
         headers: {
