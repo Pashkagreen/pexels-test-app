@@ -1,18 +1,12 @@
-import React, {
-  FormEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { FormEvent, useMemo, useState } from "react";
 import "./SearchField.scss";
-import SearchForm from "./SearchForm";
+import SearchForm from "../SearchForm/SearchForm";
 import tips from "./tips";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../hooks/useTypedSelector";
-import { SearchWordTypes } from "../types/searchWord";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
-import { searchPhotos } from "../store/action-creators/photo";
+import { searchPhotos } from "../../store/action-creators/photo";
 
 const SearchField: React.FC = () => {
   const navigate = useNavigate();
@@ -27,8 +21,6 @@ const SearchField: React.FC = () => {
     e.preventDefault();
     dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
     dispatch(searchPhotos(1, search));
-    console.log(searchListState);
-    console.log(searchState);
     navigate(`/search/${search}`);
   };
 
@@ -45,13 +37,11 @@ const SearchField: React.FC = () => {
   const tipsSearch = (e: any) => {
     e.preventDefault();
     const tip = e.target.innerHTML.substr(0, e.target.innerHTML.length - 1);
-    console.log(tip);
     dispatch({
       type: SearchWordTypes.SET_SEARCH_WORD,
       payload: tip.toString(),
     });
     dispatch(searchPhotos(1, tip.toString()));
-    console.log(searchState);
     navigate(`/search/${tip}`);
   };
 
@@ -70,7 +60,7 @@ const SearchField: React.FC = () => {
           className="search-button"
           onKeyPress={(e) => e.key === "Enter" && submitHandler}
         >
-          <i className="fa fa-search"></i>
+          <i className="fa fa-search" />
         </button>
       </form>
       <div className="search-tips">

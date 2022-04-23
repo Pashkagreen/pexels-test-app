@@ -2,8 +2,8 @@ import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useTypedSelector } from "./hooks/useTypedSelector";
-import MainPage from "./components/pages/MainPage";
-import SearchPage from "./components/pages/SearchPage";
+import MainPage from "./components/Pages/MainPage";
+import SearchPage from "./components/Pages/SearchPage";
 
 const App = () => {
   const searchWordState = useTypedSelector((state) => state.word);

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ModifiedNavbar from "../ModifiedNavbar";
-import Gallery from "../gallery/Gallery";
+import React, { useCallback, useEffect, useState } from "react";
+import ModifiedNavbar from "../Navbars/ModifiedNavbar";
+import Gallery from "../Gallery/Gallery";
 import "./SearchPage.scss";
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import Spinner from "../Spinner";
+import Spinner from "../Spinner/Spinner";
 import { EMPTY_SEARCH, RESULT } from "../../constants/searchConstants";
 import { searchPhotos } from "../../store/action-creators/photo";
 import { useDispatch } from "react-redux";
@@ -24,17 +24,20 @@ const SearchPage: React.FC = () => {
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [fetching]);
+  }, [dispatch, fetching]);
 
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
-    ) {
-      setFetching(true);
-    }
-  };
+  const scrollHandler = useCallback(
+    (e: any) => {
+      if (
+        e.target.documentElement.scrollHeight -
+          (e.target.documentElement.scrollTop + window.innerHeight) <
+        100
+      ) {
+        setFetching(true);
+      }
+    },
+    [setFetching]
+  );
 
   useEffect(() => {
     document.addEventListener("scroll", scrollHandler);

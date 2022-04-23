@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import Spinner from "../Spinner";
+import Spinner from "../Spinner/Spinner";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import PhotoProps from "../../types/photoProps";
 
@@ -18,7 +18,7 @@ const Image: React.FC<PhotoProps> = ({
   const [like, setLike] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-  const photoLike = (prev: boolean) => {
+  const photoLike = () => {
     setLike((prev) => !prev);
   };
 
@@ -58,7 +58,7 @@ const Image: React.FC<PhotoProps> = ({
           >
             <FileDownloadOutlinedIcon fontSize={"large"} />
           </a>
-          <div className="like-icon" onClick={(e) => photoLike(like)}>
+          <div className="like-icon" onClick={() => photoLike()}>
             {like ? (
               <FavoriteIcon fontSize={"large"} style={{ color: "red" }} />
             ) : (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Gallery.scss";
 import Image from "./Image";
 import { Photo } from "pexels";

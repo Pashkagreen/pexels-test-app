@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
-import ModifiedNavbar from "../ModifiedNavbar";
-import SearchField from "../SearchField";
-import Categories from "../Categories";
-import Gallery from "../gallery/Gallery";
-import { fetchPhotos, searchPhotos } from "../../store/action-creators/photo";
+import Navbar from "../Navbars/Navbar";
+import ModifiedNavbar from "../Navbars/ModifiedNavbar";
+import SearchField from "../SearchField/SearchField";
+import Categories from "../Categories/Categories";
+import Gallery from "../Gallery/Gallery";
+import { fetchPhotos } from "../../store/action-creators/photo";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
@@ -22,7 +22,7 @@ const MainPage: React.FC = () => {
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [fetching]);
+  }, [dispatch, fetching]);
 
   const scrollHandler = (e: any) => {
     if (
@@ -39,7 +39,7 @@ const MainPage: React.FC = () => {
     return function () {
       document.removeEventListener("scroll", scrollHandler);
     };
-  }, [scrollHandler]);
+  }, []);
 
   const handleScroll = () => {
     const position = window.scrollY;
@@ -55,7 +55,7 @@ const MainPage: React.FC = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, []);
 
   return (
     <div>

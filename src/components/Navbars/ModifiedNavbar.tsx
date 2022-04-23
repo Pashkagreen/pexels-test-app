@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
-import "./Dropdown.scss";
+import Dropdown from "../Dropdown/Dropdown";
+import "../Dropdown/Dropdown.scss";
 import "./Navbar.scss";
-import Button from "./Button";
-const Logo = require("../images/logo192.png");
+import Button from "../Button/Button";
+import SearchForm from "../SearchForm/SearchForm";
+import { useDispatch } from "react-redux";
+import { SearchWordTypes } from "../../types/searchWord";
+import { searchPhotos } from "../../store/action-creators/photo";
+import { useNavigate } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+const Logo = require("../../images/logo192.png");
+
+const ModifiedNavbar: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
@@ -29,9 +38,26 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
+    dispatch(searchPhotos(1, search));
+    navigate(`/search/${search}`);
+  };
+
   return (
     <>
-      <nav className="navbar">
+      <nav
+        className="navbar"
+        style={{
+          paddingRight: "20px",
+          width: "100%",
+          position: "fixed",
+          top: "0",
+          backgroundColor: "#242222",
+          zIndex: "200",
+        }}
+      >
         <Link
           to="/"
           className="navbar-logo"
@@ -47,7 +73,22 @@ const Navbar: React.FC = () => {
         <div className="menu-icon" onClick={handleClick}>
           <i className={click ? "fas fa-times" : "fas fa-bars"} />
         </div>
-        <div className="place-for-search"></div>
+        <div className="place-for-search">
+          {
+            <form className="search-block" onSubmit={submitHandler}>
+              <SearchForm
+                value={search}
+                onChange={(e) => setSearch(e.currentTarget.value)}
+              />
+              <button
+                className="search-button"
+                onKeyPress={(e) => e.key === "Enter" && submitHandler}
+              >
+                <i className="fa fa-search"></i>
+              </button>
+            </form>
+          }
+        </div>
         <ul className={click ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
             <Link to="/search" className="nav-links" onClick={closeMobileMenu}>
@@ -90,4 +131,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default ModifiedNavbar;

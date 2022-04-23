@@ -1,4 +1,4 @@
-export const MenuItems = [
+const MenuItems: any[] = [
   {
     title: "Войти",
     path: "/",
@@ -15,3 +15,5 @@ export const MenuItems = [
     cName: "dropdown-link",
   },
 ];
+
+export default MenuItems;
