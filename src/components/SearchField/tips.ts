@@ -13,7 +13,7 @@ const tips = [
   },
   {
     id: 4,
-    tip: "собаки",
+    tip: "dogs",
   },
   {
     id: 5,
@@ -21,143 +21,143 @@ const tips = [
   },
   {
     id: 6,
-    tip: "дети",
+    tip: "children",
   },
   {
     id: 7,
-    tip: "обои",
+    tip: "wallpaper",
   },
   {
     id: 8,
-    tip: "дождь",
+    tip: "rain",
   },
   {
     id: 9,
-    tip: "огурцы",
+    tip: "cucumbers",
   },
   {
     id: 10,
-    tip: "море",
+    tip: "sea",
   },
   {
     id: 11,
-    tip: "горы",
+    tip: "mountains",
   },
   {
     id: 12,
-    tip: "лес",
+    tip: "forest",
   },
   {
     id: 13,
-    tip: "тропинка",
+    tip: "road",
   },
   {
     id: 14,
-    tip: "асфальт",
+    tip: "training",
   },
   {
     id: 15,
-    tip: "розы",
+    tip: "roses",
   },
   {
     id: 16,
-    tip: "радуга",
+    tip: "rainbow",
   },
   {
     id: 17,
-    tip: "кофе",
+    tip: "coffee",
   },
   {
     id: 18,
-    tip: "виноград",
+    tip: "grapes",
   },
   {
     id: 19,
-    tip: "футбол",
+    tip: "football",
   },
   {
     id: 20,
-    tip: "хоккей",
+    tip: "hockey",
   },
   {
     id: 21,
-    tip: "дома",
+    tip: "buildings",
   },
   {
     id: 22,
-    tip: "снег",
+    tip: "snow",
   },
   {
     id: 23,
-    tip: "снежинки",
+    tip: "skyscraper",
   },
   {
     id: 24,
-    tip: "новый год",
+    tip: "new year",
   },
   {
     id: 25,
-    tip: "шары",
+    tip: "balls",
   },
   {
     id: 26,
-    tip: "Германия",
+    tip: "Germany",
   },
   {
     id: 27,
-    tip: "еда",
+    tip: "eat",
   },
   {
     id: 28,
-    tip: "вертолет",
+    tip: "helicopter",
   },
   {
     id: 29,
-    tip: "время",
+    tip: "time",
   },
   {
     id: 30,
-    tip: "концерт",
+    tip: "concert",
   },
   {
     id: 31,
-    tip: "праздник",
+    tip: "holiday",
   },
   {
     id: 32,
-    tip: "фестиваль",
+    tip: "festival",
   },
   {
     id: 33,
-    tip: "парламент",
+    tip: "parlament",
   },
   {
     id: 34,
-    tip: "Венеция",
+    tip: "Venice",
   },
   {
     id: 35,
-    tip: "Мерседес",
+    tip: "Mercedes",
   },
   {
     id: 36,
-    tip: "компьютер",
+    tip: "computer",
   },
   {
     id: 37,
-    tip: "работа",
+    tip: "work",
   },
   {
     id: 38,
-    tip: "яхта",
+    tip: "yacht",
   },
   {
     id: 39,
-    tip: "парус",
+    tip: "horse",
   },
   {
     id: 40,
-    tip: "корабль",
+    tip: "ship",
   },
 ];
 

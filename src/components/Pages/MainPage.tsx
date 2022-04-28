@@ -10,48 +10,50 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const MainPage: React.FC = () => {
   const dispatch = useDispatch();
+  let state = useTypedSelector((state) => state.photos?.photos);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
-  let state = useTypedSelector((state) => state.photos?.photos);
-  const [should, setShould] = useState(false);
+  const [dummy, setDummy] = useState(state);
+  const [shouldNavbarFixed, setShouldNavbarFixed] = useState(false);
+
+  useEffect(() => {
+    setDummy(state);
+  }, [state]);
 
   useEffect(() => {
     if (fetching) {
       dispatch(fetchPhotos(currentPage));
-      console.log(state);
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [dispatch, fetching]);
+  }, [fetching]);
+  console.log("state:", state);
 
   //For infinite scroll
-  const scrollHandler = useCallback(
-    (e: any) => {
-      if (
-        e.target.documentElement.scrollHeight -
-          (e.target.documentElement.scrollTop + window.innerHeight) <
-        100
-      ) {
-        setFetching(true);
-      }
-    },
-    [setFetching]
-  );
+  const scrollHandler = (e: any) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetching(true);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("scroll", scrollHandler);
     return function () {
       document.removeEventListener("scroll", scrollHandler);
     };
-  }, [scrollHandler]);
+  }, []);
 
   //For navbar
   const handleScroll = () => {
     const position = window.scrollY;
     if (position > 100) {
-      setShould(true);
+      setShouldNavbarFixed(true);
     } else if (position < 100) {
-      setShould(false);
+      setShouldNavbarFixed(false);
     }
   };
 
@@ -66,11 +68,11 @@ const MainPage: React.FC = () => {
     <div>
       <div className="wrapper">
         <Navbar />
-        {should ? <ModifiedNavbar /> : null}
+        {shouldNavbarFixed ? <ModifiedNavbar /> : null}
         <SearchField />
       </div>
       <Categories />
-      <Gallery photo={state} />
+      <Gallery photo={dummy} />
     </div>
   );
 };

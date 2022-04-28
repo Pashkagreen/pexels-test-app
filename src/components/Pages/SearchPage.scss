@@ -16,13 +16,16 @@
     font-size: 18px;
 
     &:hover {
-      color: #5e5e5e;
+      color: white;
+      background-color: #036956;
+
     }
   }
 }
 .search-loading {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {

@@ -14,7 +14,6 @@ const Image: React.FC<PhotoProps> = ({
   photographer_url,
 }) => {
   const state = useTypedSelector((state) => state.photos);
-
   const [like, setLike] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 

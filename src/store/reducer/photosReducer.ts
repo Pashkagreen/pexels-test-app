@@ -5,6 +5,7 @@ const initialState: PhotoState = {
   photos: [],
   searchPhotos: [],
   loading: false,
+  isLoaded: false,
   error: null,
   background: [],
 };
@@ -16,10 +17,10 @@ const photosReducer = (
   switch (action.type) {
     case PhotoActionTypes.FETCH_PHOTOS:
       return {
+        ...state,
+        isLoaded: false,
         loading: true,
         error: null,
-        photos: [],
-        searchPhotos: [],
         background: [],
       };
     case PhotoActionTypes.FETCH_PHOTOS_SUCCESS:
@@ -28,6 +29,7 @@ const photosReducer = (
       photosArr = [...state.photos, ...photos];
       return {
         loading: false,
+        isLoaded: true,
         error: null,
         photos: photosArr,
         searchPhotos: [],
@@ -40,6 +42,7 @@ const photosReducer = (
       return {
         photos: [...state.photos],
         loading: false,
+        isLoaded: true,
         error: null,
         searchPhotos: searchPhotosArr,
         background: [],
@@ -47,6 +50,7 @@ const photosReducer = (
     case PhotoActionTypes.FETCH_PHOTOS_ERROR:
       return {
         loading: false,
+        isLoaded: false,
         error: action.payload,
         photos: [...state.photos],
         background: [],
@@ -56,6 +60,7 @@ const photosReducer = (
       return {
         loading: false,
         error: null,
+        isLoaded: true,
         photos: [...state.photos],
         background: [...state.background, ...action.payload],
         searchPhotos: [...state.searchPhotos],

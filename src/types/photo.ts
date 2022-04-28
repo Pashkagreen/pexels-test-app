@@ -4,6 +4,7 @@ export interface PhotoState {
   photos: Photo[];
   searchPhotos: Photo[];
   loading: boolean;
+  isLoaded: boolean;
   error: null | string;
   background: Photo[];
 }

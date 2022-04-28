@@ -11,33 +11,34 @@ import { useDispatch } from "react-redux";
 
 const SearchPage: React.FC = () => {
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [fetching, setFetching] = useState(true);
   const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
   const searchWordState = useTypedSelector((state) => state.word);
   const loadingState = useTypedSelector((state) => state.photos?.loading);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [fetching, setFetching] = useState(true);
+  const [dummy, setDummy] = useState(searchState);
+
+  useEffect(() => {
+    setDummy(searchState);
+  }, [searchState]);
 
   useEffect(() => {
     if (fetching) {
       dispatch(searchPhotos(currentPage, searchWordState?.searchWord));
-      console.log(searchState);
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
   }, [fetching]);
 
-  const scrollHandler = useCallback(
-    (e: any) => {
-      if (
-        e.target.documentElement.scrollHeight -
-          (e.target.documentElement.scrollTop + window.innerHeight) <
-        100
-      ) {
-        setFetching(true);
-      }
-    },
-    [setFetching]
-  );
+  const scrollHandler = (e: any) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetching(true);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("scroll", scrollHandler);
@@ -68,7 +69,7 @@ const SearchPage: React.FC = () => {
           </Link>
         </div>
       )}
-      <Gallery photo={searchState} />
+      <Gallery photo={dummy} />
     </div>
   );
 };
