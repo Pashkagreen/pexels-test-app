@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
 import { searchPhotos } from "../../store/action-creators/photo";
+import { PhotoActionTypes } from "../../types/photo";
 
 const SearchField: React.FC = () => {
   const navigate = useNavigate();
@@ -14,8 +15,8 @@ const SearchField: React.FC = () => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
     dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
-    dispatch(searchPhotos(1, search));
     navigate(`/search/${search}`);
   };
 

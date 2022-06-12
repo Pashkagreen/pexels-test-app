@@ -4,6 +4,7 @@ import { PhotoAction, PhotoActionTypes, PhotoState } from "../../types/photo";
 const initialState: PhotoState = {
   photos: [],
   searchPhotos: [],
+  totalCount: 0,
   loading: false,
   isLoaded: false,
   error: null,
@@ -34,18 +35,26 @@ const photosReducer = (
         photos: photosArr,
         searchPhotos: [],
         background: [],
+        totalCount: 0,
       };
     case PhotoActionTypes.FETCH_PHOTOS_SEARCH_SUCCESS:
-      const { searchPhotos } = action.payload;
+      const { searchPhotos, totalCount } = action.payload;
       let searchPhotosArr: Photo[] = [];
       searchPhotosArr = [...state.searchPhotos, ...searchPhotos];
       return {
-        photos: [...state.photos],
+        photos: [],
         loading: false,
         isLoaded: true,
         error: null,
         searchPhotos: searchPhotosArr,
         background: [],
+        totalCount: totalCount,
+      };
+    case PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE:
+      console.log("search state is clean");
+      return {
+        ...state,
+        searchPhotos: [],
       };
     case PhotoActionTypes.FETCH_PHOTOS_ERROR:
       return {
@@ -55,6 +64,7 @@ const photosReducer = (
         photos: [...state.photos],
         background: [],
         searchPhotos: [...state.searchPhotos],
+        totalCount: 0,
       };
     case PhotoActionTypes.FETCH_PHOTO_FOR_BACKGROUND:
       return {
@@ -64,6 +74,7 @@ const photosReducer = (
         photos: [...state.photos],
         background: [...state.background, ...action.payload],
         searchPhotos: [...state.searchPhotos],
+        totalCount: 0,
       };
     default:
       return state;

@@ -17,7 +17,7 @@ const tips = [
   },
   {
     id: 5,
-    tip: "закат",
+    tip: "sunset",
   },
   {
     id: 6,

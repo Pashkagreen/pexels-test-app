@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModifiedNavbar from "../Navbars/ModifiedNavbar";
 import Gallery from "../Gallery/Gallery";
 import "./SearchPage.scss";
@@ -14,13 +14,11 @@ const SearchPage: React.FC = () => {
   const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
   const searchWordState = useTypedSelector((state) => state.word);
   const loadingState = useTypedSelector((state) => state.photos?.loading);
-  const [currentPage, setCurrentPage] = useState(1);
+  const totalCount = useTypedSelector((state) => state.photos?.totalCount);
+  const [currentPage, setCurrentPage] = useState(2);
   const [fetching, setFetching] = useState(true);
   const [dummy, setDummy] = useState(searchState);
-
-  useEffect(() => {
-    setDummy(searchState);
-  }, [searchState]);
+  const [total, setTotal] = useState(totalCount);
 
   useEffect(() => {
     if (fetching) {
@@ -28,7 +26,17 @@ const SearchPage: React.FC = () => {
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [fetching]);
+  }, [fetching, dispatch]);
+
+  useEffect(() => {
+    setDummy(searchState);
+    console.log(dummy?.length);
+  }, [searchState]);
+
+  useEffect(() => {
+    setTotal(totalCount);
+    console.log(total);
+  }, [totalCount]);
 
   const scrollHandler = (e: any) => {
     if (

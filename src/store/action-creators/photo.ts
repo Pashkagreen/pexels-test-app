@@ -68,6 +68,7 @@ export const searchPhotos = (
           searchPhotos: [...response.photos],
           page: page,
           loading: false,
+          totalCount: response.total_results.toString(),
         },
       });
       // }

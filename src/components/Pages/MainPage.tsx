@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbars/Navbar";
 import ModifiedNavbar from "../Navbars/ModifiedNavbar";
 import SearchField from "../SearchField/SearchField";
@@ -17,17 +17,19 @@ const MainPage: React.FC = () => {
   const [shouldNavbarFixed, setShouldNavbarFixed] = useState(false);
 
   useEffect(() => {
-    setDummy(state);
-  }, [state]);
-
-  useEffect(() => {
     if (fetching) {
       dispatch(fetchPhotos(currentPage));
       setCurrentPage((prevState) => prevState + 1);
       setFetching(false);
     }
-  }, [fetching]);
+  }, [fetching, dispatch]);
+
+  useEffect(() => {
+    setDummy(state);
+  }, [state]);
+
   console.log("state:", state);
+  console.log("dummy_state:", dummy);
 
   //For infinite scroll
   const scrollHandler = (e: any) => {

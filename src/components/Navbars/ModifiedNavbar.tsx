@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { SearchWordTypes } from "../../types/searchWord";
 import { searchPhotos } from "../../store/action-creators/photo";
 import { useNavigate } from "react-router-dom";
+import { PhotoActionTypes } from "../../types/photo";
 
 const Logo = require("../../images/logo192.png");
 
@@ -40,6 +41,7 @@ const ModifiedNavbar: React.FC = () => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
     dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
     dispatch(searchPhotos(1, search));
     navigate(`/search/${search}`);
