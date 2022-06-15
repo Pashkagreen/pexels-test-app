@@ -12,7 +12,9 @@ const Gallery: React.FC<TGallery> = ({ photo }) => {
 
   return (
     <div className="container">
-      <span>Бесплатные стоковые фото</span>
+      <div className="title-row">
+        <span>Бесплатные стоковые фото</span>
+      </div>
       <div className="row">
         {photo?.map((item) => (
           <Image

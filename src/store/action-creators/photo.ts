@@ -1,6 +1,6 @@
 import { PhotoAction, PhotoActionTypes } from "../../types/photo";
 import { ThunkAction } from "redux-thunk";
-import RootState from "../reducer";
+import RootState from "../reducers";
 
 const API_KEY = "563492ad6f917000010000014640aabb4e9d420cbe1c0df7daf4c2bf";
 

@@ -12,6 +12,12 @@
   }
 
 }
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
 .row {
   margin-top: 1rem;
   column-count: 3;
