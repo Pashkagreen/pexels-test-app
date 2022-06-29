@@ -9,6 +9,7 @@
   color: white;
   cursor: pointer;
   background-color: $green;
+  min-width: 110px;
   &:hover {
     padding: 6px 18px;
     transition: all 0.3s ease-out;

@@ -10,12 +10,15 @@ import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
 import { PhotoActionTypes } from "../../types/photoState";
 import { batch } from "react-redux";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const Logo = require("../../images/logo192.png");
 
 const ModifiedNavbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const language = useTypedSelector((state) => state.lang.language);
   const [search, setSearch] = useState("");
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -95,17 +98,17 @@ const ModifiedNavbar: React.FC = () => {
         <ul className={click ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
             <Link to="/search" className="nav-links" onClick={closeMobileMenu}>
-              Найти фото
+              {translate("findPhoto", language)}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Лицензия
+              {translate("license", language)}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Загрузить
+              {translate("download", language)}
             </Link>
           </li>
           <li
@@ -124,7 +127,7 @@ const ModifiedNavbar: React.FC = () => {
               className="nav-links-mobile"
               onClick={closeMobileMenu}
             >
-              Присоединиться
+              {translate("join", language)}
             </a>
           </li>
         </ul>

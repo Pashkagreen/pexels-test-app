@@ -3,6 +3,8 @@ import "./Gallery.scss";
 import Image from "./Image";
 import { Photo } from "pexels";
 import Spinner from "../Spinner/Spinner";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 type TGallery = {
   photo?: Photo[];
@@ -10,12 +12,13 @@ type TGallery = {
 };
 
 const Gallery: React.FC<TGallery> = ({ photo, loading }) => {
+  const language = useTypedSelector((state) => state.lang.language);
   if (photo?.length === 0) return null;
 
   return (
     <div className="container">
       <div className="title-row">
-        <span>Бесплатные стоковые фото</span>
+        <span>{translate("galleryTitle", language)}</span>
       </div>
       <div className="row">
         {photo?.map((item) => (

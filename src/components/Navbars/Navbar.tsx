@@ -4,9 +4,12 @@ import Dropdown from "../Dropdown/Dropdown";
 import "../Dropdown/Dropdown.scss";
 import "./Navbar.scss";
 import Button from "../Button/Button";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 const Logo = require("../../images/logo192.png");
 
 const Navbar: React.FC = () => {
+  const language = useTypedSelector((state) => state.lang.language);
   const [click, setClick] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
@@ -51,17 +54,17 @@ const Navbar: React.FC = () => {
         <ul className={click ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
             <Link to="/search" className="nav-links" onClick={closeMobileMenu}>
-              Найти фото
+              {translate("findPhoto", language)}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Лицензия
+              {translate("license", language)}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Загрузить
+              {translate("download", language)}
             </Link>
           </li>
           <li
@@ -80,7 +83,7 @@ const Navbar: React.FC = () => {
               className="nav-links-mobile"
               onClick={closeMobileMenu}
             >
-              Присоединиться
+              {translate("join", language)}
             </a>
           </li>
         </ul>

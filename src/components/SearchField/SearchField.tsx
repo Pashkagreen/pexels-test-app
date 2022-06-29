@@ -5,12 +5,14 @@ import tips from "./tips";
 import { useDispatch } from "react-redux";
 import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
-import { searchPhotos } from "../../api/index";
+import { translate } from "../../i18n";
 import { PhotoActionTypes } from "../../types/photoState";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const SearchField: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const language = useTypedSelector((state) => state.lang.language);
   const [search, setSearch] = useState("");
 
   const submitHandler = (e: FormEvent) => {
@@ -43,10 +45,7 @@ const SearchField: React.FC = () => {
 
   return (
     <div className="search-field">
-      <h1 className="search-title">
-        Лучшие бесплатные стоковые фото, изображения без роялти и видео от
-        талантливых авторов.
-      </h1>
+      <h1 className="search-title">{translate("mainTitle", language)}</h1>
       <form className="search-block" onSubmit={submitHandler}>
         <SearchForm
           value={search}
@@ -60,7 +59,7 @@ const SearchField: React.FC = () => {
         </button>
       </form>
       <div className="search-tips">
-        <span>Идеи для поиска:</span>
+        <span>{translate("findIdeas", language)}:</span>
         <ul className="search-keywords" onClick={tipsSearch}>
           {arrTipsFunc.map((item) => (
             <li key={item.id}>

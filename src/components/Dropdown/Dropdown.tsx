@@ -3,10 +3,33 @@ import { Link } from "react-router-dom";
 import "./Dropdown.scss";
 import { Icon as UK } from "../../images/united_kingdom";
 import { Icon as RUS } from "../../images/russia";
+import { setLanguage } from "../../store/action-creators/langActions";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useDispatch } from "react-redux";
 
 const Dropdown: React.FC = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+
+  const language = useTypedSelector((state) => state.lang.language);
+  const dispatch = useDispatch();
+
+  const changeLanguageHandler = (value: string) => {
+    switch (value) {
+      case "EN":
+        return "RU";
+      case "RU":
+        return "EN";
+      default:
+        return "RU";
+    }
+  };
+
+  const chooseLanguageHandler = (value: string) => {
+    dispatch(setLanguage(value));
+  };
+
   return (
     <>
       <ul
@@ -19,7 +42,7 @@ const Dropdown: React.FC = () => {
             to="/"
             onClick={() => setClick(false)}
           >
-            Войти
+            {translate("signIn", language)}
           </Link>
         </li>
         <li>
@@ -28,7 +51,7 @@ const Dropdown: React.FC = () => {
             to="/"
             onClick={() => setClick(false)}
           >
-            Присоединиться
+            {translate("join", language)}
           </Link>
         </li>
         <li>
@@ -39,15 +62,14 @@ const Dropdown: React.FC = () => {
               alignItems: "center",
               justifyContent: "space-between",
             }}
+            onClick={() =>
+              chooseLanguageHandler(changeLanguageHandler(language))
+            }
           >
-            <Link
-              to="/"
-              onClick={() => setClick(false)}
-              className="change-lang"
-            >
-              Изменить язык
-            </Link>
-            <UK />
+            <div onClick={() => setClick(false)} className="change-lang">
+              {translate("changeLanguage", language)}
+            </div>
+            {language === "EN" ? <RUS /> : <UK />}
           </div>
         </li>
       </ul>

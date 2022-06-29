@@ -1,5 +1,7 @@
 import React, { InputHTMLAttributes } from "react";
 import "./SearchForm.scss";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 const SearchForm: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({
   type = "text",
@@ -7,6 +9,8 @@ const SearchForm: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({
   name,
   onChange,
 }) => {
+  const language = useTypedSelector((state) => state.lang.language);
+
   return (
     <div className="search-form">
       <input
@@ -18,7 +22,7 @@ const SearchForm: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({
         onChange={onChange}
         required
         autoComplete="off"
-        placeholder="Ищите бесплатные фото и видео"
+        placeholder={translate("placeholder", language)}
       />
     </div>
   );

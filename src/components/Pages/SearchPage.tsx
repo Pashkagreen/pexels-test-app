@@ -4,17 +4,17 @@ import Gallery from "../Gallery/Gallery";
 import "./SearchPage.scss";
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import Spinner from "../Spinner/Spinner";
-import { EMPTY_SEARCH, RESULT } from "../../constants/searchConstants";
 import { useDispatch } from "react-redux";
 import { PhotoActionTypes } from "../../types/photoState";
 import { useInView } from "react-intersection-observer";
+import { translate } from "../../i18n";
 
 const SearchPage: React.FC = () => {
   const dispatch = useDispatch();
   const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
   const searchWordState = useTypedSelector((state) => state.word);
   const loadingState = useTypedSelector((state) => state.photos?.loading);
+  const language = useTypedSelector((state) => state.lang.language);
   const [currentPage, setCurrentPage] = useState(1);
   const [dummy, setDummy] = useState(searchState);
 
@@ -41,19 +41,20 @@ const SearchPage: React.FC = () => {
       {loadingState ? (
         <div className="search-container">
           <div className="search-loading">
-            <h1>Идет загрузка фото...</h1>
-            <Spinner />
+            <h1>{translate("loading", language)}</h1>
           </div>
         </div>
       ) : (
         <div className="search-container">
           <h1>
             {searchState?.length === 0
-              ? EMPTY_SEARCH
-              : `${RESULT} ${searchWordState?.searchWord}`}
+              ? translate("notFound", language)
+              : `${translate("results", language)} ${
+                  searchWordState?.searchWord
+                }`}
           </h1>
           <Link to="/" className="return-button">
-            Вернуться на главную
+            {translate("comeBack", language)}
           </Link>
         </div>
       )}
