@@ -1,5 +1,6 @@
 import {
   takeEvery,
+  take,
   takeLatest,
   put,
   call,
@@ -7,31 +8,49 @@ import {
   spawn,
   all,
 } from "@redux-saga/core/effects";
-import { PhotoActionTypes } from "../../types/photo";
+import { PhotoActionTypes } from "../../types/photoState";
+import { fetchPhotos, searchPhotos } from "../../api/index";
+import {
+  receiveDefaultPhotos,
+  receiveSearchPhotos,
+  registerError,
+} from "../action-creators/photo";
+import PhotosResponse from "../../types/photosResponse";
 
-//spawn - noblock, создает параллельную задачу в корне саги
-export function* handleLatestNews() {
+export function* searchDefaultPhotos(action: any) {
   try {
-    console.log("search fetch success");
-  } catch {
-    console.log("e");
+    const photosData: PhotosResponse = yield call(
+      fetchPhotos,
+      action.currentPage
+    );
+    yield put(receiveDefaultPhotos(photosData));
+  } catch (e) {
+    yield take(registerError);
   }
 }
-export function* handlePopularNews() {
+
+export function* searchPhotosByQuery(action: any) {
+  const [currentPage, searchWord] = action.payload;
   try {
-    console.log("photos fetched");
-  } catch {
-    console.log("e");
+    const photosData: PhotosResponse = yield call(
+      searchPhotos,
+      currentPage,
+      searchWord
+    );
+    yield put(receiveSearchPhotos(photosData));
+  } catch (e) {
+    yield take(registerError);
   }
 }
 
-export function* watchPopularSaga() {
-  yield takeEvery(PhotoActionTypes.FETCH_PHOTOS, handlePopularNews);
+export function* watchDefaultPhotos() {
+  yield takeLatest(PhotoActionTypes.FETCH_PHOTOS_SUCCESS, searchDefaultPhotos);
 }
-export function* watchLatestSaga() {
-  yield takeEvery(PhotoActionTypes.FETCH_PHOTOS_SUCCESS, handleLatestNews);
+
+export function* watchSearchPhotos() {
+  yield takeLatest(PhotoActionTypes.FETCH_PHOTOS, searchPhotosByQuery);
 }
 
 export default function* rootSaga() {
-  yield all([fork(watchPopularSaga), fork(watchLatestSaga)]);
+  yield all([spawn(watchDefaultPhotos), spawn(watchSearchPhotos)]);
 }

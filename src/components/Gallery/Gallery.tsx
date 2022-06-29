@@ -2,12 +2,14 @@ import React from "react";
 import "./Gallery.scss";
 import Image from "./Image";
 import { Photo } from "pexels";
+import Spinner from "../Spinner/Spinner";
 
 type TGallery = {
   photo?: Photo[];
+  loading?: boolean | undefined;
 };
 
-const Gallery: React.FC<TGallery> = ({ photo }) => {
+const Gallery: React.FC<TGallery> = ({ photo, loading }) => {
   if (photo?.length === 0) return null;
 
   return (
@@ -26,6 +28,7 @@ const Gallery: React.FC<TGallery> = ({ photo }) => {
           />
         ))}
       </div>
+      {loading ? <Spinner /> : null}
     </div>
   );
 };

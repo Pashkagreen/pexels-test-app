@@ -4,50 +4,35 @@ import ModifiedNavbar from "../Navbars/ModifiedNavbar";
 import SearchField from "../SearchField/SearchField";
 import Categories from "../Categories/Categories";
 import Gallery from "../Gallery/Gallery";
-import { fetchPhotos } from "../../store/action-creators/photo";
 import { useDispatch } from "react-redux";
+import { useInView } from "react-intersection-observer";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { PhotoActionTypes } from "../../types/photoState";
 
 const MainPage: React.FC = () => {
   const dispatch = useDispatch();
   let state = useTypedSelector((state) => state.photos?.photos);
+  const loadingState = useTypedSelector((state) => state.photos?.loading);
   const [currentPage, setCurrentPage] = useState(1);
-  const [fetching, setFetching] = useState(true);
   const [dummy, setDummy] = useState(state);
   const [shouldNavbarFixed, setShouldNavbarFixed] = useState(false);
 
+  const { ref, inView } = useInView({
+    threshold: 0,
+    delay: 500,
+  });
+
   useEffect(() => {
-    if (fetching) {
-      dispatch(fetchPhotos(currentPage));
-      setCurrentPage((prevState) => prevState + 1);
-      setFetching(false);
-    }
-  }, [fetching, dispatch]);
+    dispatch({
+      type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS,
+      currentPage,
+    });
+    setCurrentPage((prevState) => prevState + 1);
+  }, [inView]);
 
   useEffect(() => {
     setDummy(state);
   }, [state]);
-
-  console.log("state:", state);
-  console.log("dummy_state:", dummy);
-
-  //For infinite scroll
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
-    ) {
-      setFetching(true);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("scroll", scrollHandler);
-    return function () {
-      document.removeEventListener("scroll", scrollHandler);
-    };
-  }, []);
 
   //For navbar
   const handleScroll = () => {
@@ -74,9 +59,10 @@ const MainPage: React.FC = () => {
         <SearchField />
       </div>
       <Categories />
-      <Gallery photo={dummy} />
+      <Gallery photo={dummy} loading={loadingState} />
+      <div className="intersection-observer" ref={ref}></div>
     </div>
   );
 };
 
-export default MainPage;
+export const MemoizedMainPage = React.memo(MainPage);

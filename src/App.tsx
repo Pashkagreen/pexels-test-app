@@ -2,8 +2,8 @@ import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useTypedSelector } from "./hooks/useTypedSelector";
-import MainPage from "./components/Pages/MainPage";
-import SearchPage from "./components/Pages/SearchPage";
+import { MemoizedMainPage } from "./components/Pages/MainPage";
+import { MemoizedSearchPage } from "./components/Pages/SearchPage";
 
 const App = () => {
   const searchWordState = useTypedSelector((state) => state.word);
@@ -12,10 +12,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path={path} element={<SearchPage />} />
-        <Route path="/search/*" element={<SearchPage />} />
-        <Route path="*" element={<MainPage />} />
+        <Route path="/" element={<MemoizedMainPage />} />
+        <Route path={path} element={<MemoizedSearchPage />} />
+        <Route path="/search/*" element={<MemoizedSearchPage />} />
+        <Route path="*" element={<MemoizedMainPage />} />
       </Routes>
     </Router>
   );

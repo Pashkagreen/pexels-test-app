@@ -6,54 +6,34 @@ import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import Spinner from "../Spinner/Spinner";
 import { EMPTY_SEARCH, RESULT } from "../../constants/searchConstants";
-import { searchPhotos } from "../../store/action-creators/photo";
 import { useDispatch } from "react-redux";
+import { PhotoActionTypes } from "../../types/photoState";
+import { useInView } from "react-intersection-observer";
 
 const SearchPage: React.FC = () => {
   const dispatch = useDispatch();
   const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
   const searchWordState = useTypedSelector((state) => state.word);
   const loadingState = useTypedSelector((state) => state.photos?.loading);
-  const totalCount = useTypedSelector((state) => state.photos?.totalCount);
-  const [currentPage, setCurrentPage] = useState(2);
-  const [fetching, setFetching] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const [dummy, setDummy] = useState(searchState);
-  const [total, setTotal] = useState(totalCount);
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+    delay: 500,
+  });
 
   useEffect(() => {
-    if (fetching) {
-      dispatch(searchPhotos(currentPage, searchWordState?.searchWord));
-      setCurrentPage((prevState) => prevState + 1);
-      setFetching(false);
-    }
-  }, [fetching, dispatch]);
+    dispatch({
+      type: PhotoActionTypes.FETCH_PHOTOS,
+      payload: [currentPage, searchWordState?.searchWord],
+    });
+    setCurrentPage((prevState) => prevState + 1);
+  }, [inView, searchWordState?.searchWord]);
 
   useEffect(() => {
     setDummy(searchState);
-    console.log(dummy?.length);
   }, [searchState]);
-
-  useEffect(() => {
-    setTotal(totalCount);
-    console.log(total);
-  }, [totalCount]);
-
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
-    ) {
-      setFetching(true);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("scroll", scrollHandler);
-    return function () {
-      document.removeEventListener("scroll", scrollHandler);
-    };
-  }, []);
 
   return (
     <div>
@@ -77,9 +57,10 @@ const SearchPage: React.FC = () => {
           </Link>
         </div>
       )}
-      <Gallery photo={dummy} />
+      <Gallery photo={dummy} loading={loadingState} />
+      <div className="intersection-observer" ref={ref}></div>
     </div>
   );
 };
 
-export default SearchPage;
+export const MemoizedSearchPage = React.memo(SearchPage);

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Dropdown.scss";
-import MenuItems from "./MenuItems";
+import { Icon as UK } from "../../images/united_kingdom";
+import { Icon as RUS } from "../../images/russia";
 
 const Dropdown: React.FC = () => {
   const [click, setClick] = useState(false);
@@ -12,19 +13,43 @@ const Dropdown: React.FC = () => {
         onClick={handleClick}
         className={click ? "dropdown-menu clicked" : "dropdown-menu"}
       >
-        {MenuItems.map((item, index) => {
-          return (
-            <li key={index}>
-              <Link
-                className={item.cName}
-                to={item.path}
-                onClick={() => setClick(false)}
-              >
-                {item.title}
-              </Link>
-            </li>
-          );
-        })}
+        <li>
+          <Link
+            className="dropdown-link"
+            to="/"
+            onClick={() => setClick(false)}
+          >
+            Войти
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="dropdown-link"
+            to="/"
+            onClick={() => setClick(false)}
+          >
+            Присоединиться
+          </Link>
+        </li>
+        <li>
+          <div
+            className="dropdown-link"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Link
+              to="/"
+              onClick={() => setClick(false)}
+              className="change-lang"
+            >
+              Изменить язык
+            </Link>
+            <UK />
+          </div>
+        </li>
       </ul>
     </>
   );

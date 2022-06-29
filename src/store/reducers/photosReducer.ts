@@ -1,5 +1,9 @@
 import { Photo } from "pexels";
-import { PhotoAction, PhotoActionTypes, PhotoState } from "../../types/photo";
+import {
+  PhotoAction,
+  PhotoActionTypes,
+  PhotoState,
+} from "../../types/photoState";
 
 const initialState: PhotoState = {
   photos: [],
@@ -19,62 +23,48 @@ const photosReducer = (
     case PhotoActionTypes.FETCH_PHOTOS:
       return {
         ...state,
-        isLoaded: false,
         loading: true,
-        error: null,
-        background: [],
       };
     case PhotoActionTypes.FETCH_PHOTOS_SUCCESS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PhotoActionTypes.RECEIVE_DEFAULT_PHOTOS: {
       const { photos } = action.payload;
       let photosArr: Photo[] = [];
       photosArr = [...state.photos, ...photos];
       return {
+        ...state,
         loading: false,
         isLoaded: true,
         error: null,
         photos: photosArr,
-        searchPhotos: [],
-        background: [],
-        totalCount: 0,
       };
-    case PhotoActionTypes.FETCH_PHOTOS_SEARCH_SUCCESS:
-      const { searchPhotos, totalCount } = action.payload;
+    }
+    case PhotoActionTypes.RECEIVE_SEARCH_PHOTOS: {
+      const { photos } = action.payload;
       let searchPhotosArr: Photo[] = [];
-      searchPhotosArr = [...state.searchPhotos, ...searchPhotos];
+      searchPhotosArr = [...state.searchPhotos, ...photos];
       return {
-        photos: [],
+        ...state,
         loading: false,
         isLoaded: true,
         error: null,
         searchPhotos: searchPhotosArr,
-        background: [],
-        totalCount: totalCount,
       };
+    }
     case PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE:
-      console.log("search state is clean");
       return {
         ...state,
         searchPhotos: [],
       };
     case PhotoActionTypes.FETCH_PHOTOS_ERROR:
       return {
+        ...state,
         loading: false,
         isLoaded: false,
         error: action.payload,
-        photos: [...state.photos],
-        background: [],
-        searchPhotos: [...state.searchPhotos],
-        totalCount: 0,
-      };
-    case PhotoActionTypes.FETCH_PHOTO_FOR_BACKGROUND:
-      return {
-        loading: false,
-        error: null,
-        isLoaded: true,
-        photos: [...state.photos],
-        background: [...state.background, ...action.payload],
-        searchPhotos: [...state.searchPhotos],
-        totalCount: 0,
       };
     default:
       return state;

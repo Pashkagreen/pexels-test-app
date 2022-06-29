@@ -17,11 +17,14 @@ export enum PhotoActionTypes {
   CLEAR_PHOTOS_SEARCH_STATE = "CLEAR_PHOTOS_SEARCH_STATE",
   FETCH_PHOTOS_ERROR = "FETCH_PHOTOS_ERROR",
   FETCH_PHOTO_FOR_BACKGROUND = "FETCH_PHOTO_FOR_BACKGROUND",
+  RECEIVE_DEFAULT_PHOTOS = "RECEIVE_DEFAULT_PHOTOS",
+  RECEIVE_SEARCH_PHOTOS = "RECEIVE_SEARCH_PHOTOS",
 }
 
 interface FetchPhotosAction {
   type: PhotoActionTypes.FETCH_PHOTOS;
 }
+
 interface FetchPhotosSuccessAction {
   type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS;
   payload: {
@@ -29,20 +32,32 @@ interface FetchPhotosSuccessAction {
     page: number;
   };
 }
-interface SearchPhotosSuccessAction {
-  type: PhotoActionTypes.FETCH_PHOTOS_SEARCH_SUCCESS;
+
+interface SearchDefaultPhotosSuccessAction {
+  type: PhotoActionTypes.RECEIVE_DEFAULT_PHOTOS;
   payload: {
-    searchPhotos: Photo[];
+    photos: Photo[];
     page: number;
     totalCount: number;
   };
 }
+
+interface SearchPhotosSuccessAction {
+  type: PhotoActionTypes.RECEIVE_SEARCH_PHOTOS;
+  payload: {
+    photos: Photo[];
+    page: number;
+    totalCount: number;
+  };
+}
+
 interface ClearPhotosSearchState {
   type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE;
   payload: {
     searchPhotos: Photo[];
   };
 }
+
 interface FetchPhotosErrorAction {
   type: PhotoActionTypes.FETCH_PHOTOS_ERROR;
   payload: string;
@@ -58,4 +73,5 @@ export type PhotoAction =
   | FetchPhotosErrorAction
   | FetchPhotoForBackground
   | SearchPhotosSuccessAction
-  | ClearPhotosSearchState;
+  | ClearPhotosSearchState
+  | SearchDefaultPhotosSuccessAction;

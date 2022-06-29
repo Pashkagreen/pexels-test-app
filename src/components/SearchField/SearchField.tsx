@@ -5,8 +5,8 @@ import tips from "./tips";
 import { useDispatch } from "react-redux";
 import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
-import { searchPhotos } from "../../store/action-creators/photo";
-import { PhotoActionTypes } from "../../types/photo";
+import { searchPhotos } from "../../api/index";
+import { PhotoActionTypes } from "../../types/photoState";
 
 const SearchField: React.FC = () => {
   const navigate = useNavigate();
@@ -33,11 +33,11 @@ const SearchField: React.FC = () => {
   const tipsSearch = (e: any) => {
     e.preventDefault();
     const tip = e.target.innerHTML.substring(0, e.target.innerHTML.length - 1);
+    dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
     dispatch({
       type: SearchWordTypes.SET_SEARCH_WORD,
       payload: tip.toString(),
     });
-    dispatch(searchPhotos(1, tip.toString()));
     navigate(`/search/${tip}`);
   };
 

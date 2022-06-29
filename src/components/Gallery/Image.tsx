@@ -3,8 +3,6 @@ import { useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import Spinner from "../Spinner/Spinner";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
 import PhotoProps from "../../types/photoProps";
 
 const Image: React.FC<PhotoProps> = ({
@@ -13,7 +11,6 @@ const Image: React.FC<PhotoProps> = ({
   photographer,
   photographer_url,
 }) => {
-  const state = useTypedSelector((state) => state.photos);
   const [like, setLike] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -35,16 +32,12 @@ const Image: React.FC<PhotoProps> = ({
       onMouseOver={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {state?.loading ? (
-        <Spinner />
-      ) : (
-        <img
-          src={src}
-          alt={photographer}
-          style={{ width: "100%" }}
-          className="search-img"
-        />
-      )}
+      <img
+        src={src}
+        alt={photographer}
+        style={{ width: "100%" }}
+        className="search-img"
+      />
       <div
         className="photo-info"
         style={showInfo ? { display: "flex" } : undefined}
