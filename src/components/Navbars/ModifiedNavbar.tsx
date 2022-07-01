@@ -44,7 +44,6 @@ const ModifiedNavbar: React.FC = () => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     writeStorage("searchWord", search);
-    writeStorage("currentPage", "1");
     dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
     navigate(`/search/${search}`);
   };

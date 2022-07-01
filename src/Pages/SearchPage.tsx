@@ -9,14 +9,16 @@ import { PhotoActionTypes } from "../types/photoState";
 import { useInView } from "react-intersection-observer";
 import { translate } from "../i18n";
 import { useLocalStorage, writeStorage } from "@rehooks/local-storage";
+import usePrevious from "../hooks/usePrevious";
 
 const SearchPage: React.FC = () => {
   const dispatch = useDispatch();
   const searchState = useTypedSelector((state) => state.photos?.searchPhotos);
 
   const [searchWord] = useLocalStorage("searchWord");
-  const [currentPage] = useLocalStorage("currentPage");
-  const currentPageToNumber = Number(currentPage);
+  const prevWord = usePrevious(searchWord);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const loadingState = useTypedSelector((state) => state.photos?.loading);
   const language = useTypedSelector((state) => state.lang.language);
@@ -29,10 +31,10 @@ const SearchPage: React.FC = () => {
   useEffect(() => {
     dispatch({
       type: PhotoActionTypes.FETCH_SEARCH_PHOTOS,
-      payload: [currentPageToNumber, searchWord],
+      payload: [currentPage, searchWord],
     });
-    writeStorage("currentPage", String(currentPageToNumber + 1));
-  }, [inView]);
+    setCurrentPage((prev) => prev + 1);
+  }, [inView, searchWord]);
 
   useEffect(() => {
     setDummy(searchState);

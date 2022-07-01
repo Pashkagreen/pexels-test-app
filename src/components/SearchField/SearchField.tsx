@@ -18,7 +18,6 @@ const SearchField: React.FC = () => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
-    writeStorage("currentPage", "1");
     writeStorage("searchWord", search);
     navigate(`/search/${search}`);
   };
@@ -37,7 +36,6 @@ const SearchField: React.FC = () => {
     e.preventDefault();
     const tip = e.target.innerHTML.substring(0, e.target.innerHTML.length - 1);
     dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
-    writeStorage("currentPage", "1");
     writeStorage("searchWord", tip.toString());
     navigate(`/search/${tip}`);
   };
