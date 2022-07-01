@@ -3,11 +3,11 @@ import "./SearchField.scss";
 import SearchForm from "../SearchForm/SearchForm";
 import tips from "./tips";
 import { useDispatch } from "react-redux";
-import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
 import { translate } from "../../i18n";
 import { PhotoActionTypes } from "../../types/photoState";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { writeStorage } from "@rehooks/local-storage";
 
 const SearchField: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +18,8 @@ const SearchField: React.FC = () => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
-    dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
+    writeStorage("currentPage", "1");
+    writeStorage("searchWord", search);
     navigate(`/search/${search}`);
   };
 
@@ -36,10 +37,8 @@ const SearchField: React.FC = () => {
     e.preventDefault();
     const tip = e.target.innerHTML.substring(0, e.target.innerHTML.length - 1);
     dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
-    dispatch({
-      type: SearchWordTypes.SET_SEARCH_WORD,
-      payload: tip.toString(),
-    });
+    writeStorage("currentPage", "1");
+    writeStorage("searchWord", tip.toString());
     navigate(`/search/${tip}`);
   };
 

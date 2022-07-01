@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbars/Navbar";
-import ModifiedNavbar from "../Navbars/ModifiedNavbar";
-import SearchField from "../SearchField/SearchField";
-import Categories from "../Categories/Categories";
-import Gallery from "../Gallery/Gallery";
+import Navbar from "../components/Navbars/Navbar";
+import ModifiedNavbar from "../components/Navbars/ModifiedNavbar";
+import SearchField from "../components/SearchField/SearchField";
+import Categories from "../components/Categories/Categories";
+import { MemoizedGallery } from "../components/Gallery/Gallery";
 import { useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { PhotoActionTypes } from "../../types/photoState";
+import { useTypedSelector } from "../hooks/useTypedSelector";
+import { PhotoActionTypes } from "../types/photoState";
 
 const MainPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,13 +18,12 @@ const MainPage: React.FC = () => {
   const [shouldNavbarFixed, setShouldNavbarFixed] = useState(false);
 
   const { ref, inView } = useInView({
-    threshold: 0,
-    delay: 500,
+    rootMargin: "0px 0px 350px",
   });
 
   useEffect(() => {
     dispatch({
-      type: PhotoActionTypes.FETCH_PHOTOS_SUCCESS,
+      type: PhotoActionTypes.FETCH_DEFAULT_PHOTOS,
       currentPage,
     });
     setCurrentPage((prevState) => prevState + 1);
@@ -59,7 +58,7 @@ const MainPage: React.FC = () => {
         <SearchField />
       </div>
       <Categories />
-      <Gallery photo={dummy} loading={loadingState} />
+      <MemoizedGallery photo={dummy} loading={loadingState} />
       <div className="intersection-observer" ref={ref}></div>
     </div>
   );

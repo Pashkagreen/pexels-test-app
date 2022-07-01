@@ -6,12 +6,11 @@ import "./Navbar.scss";
 import Button from "../Button/Button";
 import SearchForm from "../SearchForm/SearchForm";
 import { useDispatch } from "react-redux";
-import { SearchWordTypes } from "../../types/searchWord";
 import { useNavigate } from "react-router-dom";
 import { PhotoActionTypes } from "../../types/photoState";
-import { batch } from "react-redux";
 import { translate } from "../../i18n";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { writeStorage } from "@rehooks/local-storage";
 
 const Logo = require("../../images/logo192.png");
 
@@ -44,10 +43,9 @@ const ModifiedNavbar: React.FC = () => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    batch(() => {
-      dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
-      dispatch({ type: SearchWordTypes.SET_SEARCH_WORD, payload: search });
-    });
+    writeStorage("searchWord", search);
+    writeStorage("currentPage", "1");
+    dispatch({ type: PhotoActionTypes.CLEAR_PHOTOS_SEARCH_STATE });
     navigate(`/search/${search}`);
   };
 

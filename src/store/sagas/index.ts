@@ -4,12 +4,11 @@ import {
   takeLatest,
   put,
   call,
-  fork,
   spawn,
   all,
 } from "@redux-saga/core/effects";
 import { PhotoActionTypes } from "../../types/photoState";
-import { fetchPhotos, searchPhotos } from "../../api/index";
+import { fetchPhotos, searchPhotos } from "../../api";
 import {
   receiveDefaultPhotos,
   receiveSearchPhotos,
@@ -44,11 +43,11 @@ export function* searchPhotosByQuery(action: any) {
 }
 
 export function* watchDefaultPhotos() {
-  yield takeLatest(PhotoActionTypes.FETCH_PHOTOS_SUCCESS, searchDefaultPhotos);
+  yield takeLatest(PhotoActionTypes.FETCH_DEFAULT_PHOTOS, searchDefaultPhotos);
 }
 
 export function* watchSearchPhotos() {
-  yield takeLatest(PhotoActionTypes.FETCH_PHOTOS, searchPhotosByQuery);
+  yield takeEvery(PhotoActionTypes.FETCH_SEARCH_PHOTOS, searchPhotosByQuery);
 }
 
 export default function* rootSaga() {

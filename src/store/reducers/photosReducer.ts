@@ -12,7 +12,6 @@ const initialState: PhotoState = {
   loading: false,
   isLoaded: false,
   error: null,
-  background: [],
 };
 
 const photosReducer = (
@@ -20,12 +19,12 @@ const photosReducer = (
   action: PhotoAction
 ): PhotoState | undefined => {
   switch (action.type) {
-    case PhotoActionTypes.FETCH_PHOTOS:
+    case PhotoActionTypes.FETCH_DEFAULT_PHOTOS:
       return {
         ...state,
         loading: true,
       };
-    case PhotoActionTypes.FETCH_PHOTOS_SUCCESS:
+    case PhotoActionTypes.FETCH_SEARCH_PHOTOS:
       return {
         ...state,
         loading: true,

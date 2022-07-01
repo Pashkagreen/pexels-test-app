@@ -9,6 +9,7 @@
   "placeholder": "Search for free photos",
   "findIdeas" : "Trendings",
   "galleryTitle": "Free Stock Photos",
+  "photoTitle": "Photo by",
   "main": "Home",
   "find": "Find",
   "best" : "Best challenges",
@@ -16,6 +17,13 @@
   "loading": "Downloading photos...",
   "notFound": "We couldn’t find anything. Try to refine your search.",
   "results": "Search results on:",
-  "comeBack": "Go back"
+  "comeBack": "Go back",
+  "filters": "Filters",
+  "orientations": "All orientations",
+  "horizontal": "Horizontal",
+  "vertical": "Vertical",
+  "sizes": "All sizes",
+  "big": "Big",
+  "small": "Small"
 }
 

@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useTypedSelector } from "./hooks/useTypedSelector";
-import { MemoizedMainPage } from "./components/Pages/MainPage";
-import { MemoizedSearchPage } from "./components/Pages/SearchPage";
+import { MemoizedMainPage } from "./Pages/MainPage";
+import { MemoizedSearchPage } from "./Pages/SearchPage";
+import { useLocalStorage } from "@rehooks/local-storage";
 
 const App = () => {
-  const searchWordState = useTypedSelector((state) => state.word);
-  const path = "/search/" + searchWordState?.searchWord;
+  const [searchWord] = useLocalStorage("searchWord");
+  const path = "/search/" + searchWord;
 
   return (
     <Router>
@@ -21,4 +21,4 @@ const App = () => {
   );
 };
 
-export default App;
+export const MemoizedApp = React.memo(App);

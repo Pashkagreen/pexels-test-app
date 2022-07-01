@@ -1,22 +1,23 @@
-import React from "react";
+import React, { FC } from "react";
 import { useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import PhotoProps from "../../types/photoProps";
+import { PhotoProps } from "../../types/photoProps";
+import { translate } from "../../i18n";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useLocalStorage } from "@rehooks/local-storage";
 
-const Image: React.FC<PhotoProps> = ({
+const Image: FC<PhotoProps> = ({
   id,
   src,
   photographer,
   photographer_url,
+  onClick,
 }) => {
-  const [like, setLike] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-
-  const photoLike = () => {
-    setLike((prev) => !prev);
-  };
+  const language = useTypedSelector((state) => state.lang.language);
+  const [isLike] = useLocalStorage(`${id}`);
 
   const onMouseEnter = () => {
     setShowInfo(true);
@@ -42,7 +43,9 @@ const Image: React.FC<PhotoProps> = ({
         className="photo-info"
         style={showInfo ? { display: "flex" } : undefined}
       >
-        <a href={photographer_url}>Photo by {photographer}</a>
+        <a href={photographer_url}>
+          {translate("photoTitle", language)} {photographer}
+        </a>
         <div className="photo-icons">
           <a
             className="download-icon"
@@ -50,8 +53,8 @@ const Image: React.FC<PhotoProps> = ({
           >
             <FileDownloadOutlinedIcon fontSize={"large"} />
           </a>
-          <div className="like-icon" onClick={() => photoLike()}>
-            {like ? (
+          <div className="like-icon" onClick={onClick}>
+            {isLike ? (
               <FavoriteIcon fontSize={"large"} style={{ color: "red" }} />
             ) : (
               <FavoriteBorderIcon
@@ -66,4 +69,4 @@ const Image: React.FC<PhotoProps> = ({
   );
 };
 
-export default Image;
+export default React.memo(Image);

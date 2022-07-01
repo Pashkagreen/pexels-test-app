@@ -1,5 +1,5 @@
 .search-container {
-  padding: 0 20px;
+  padding: 0 20px 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,17 +8,22 @@
   margin-bottom: 100px;
   .return-button {
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    color: white;
-    background-color: #05a081;
+    padding: 8px 20px;
     border-radius: 4px;
-    transition: 0.3s;
+    outline: none;
+    border: 1px solid lightgray;
     font-size: 18px;
-
+    line-height: 26px;
+    font-weight: 500;
+    color: black;
+    background-color: inherit;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
     &:hover {
-      color: white;
-      background-color: #036956;
-
+      transition: 0.5s;
+      color: black;
+      border: 1px solid #242222;
     }
   }
 }
